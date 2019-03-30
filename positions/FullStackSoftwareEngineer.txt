@@ -1,0 +1,28 @@
+Job Description
+Do you have experience and a passion for building great products and bending the future? Do you obsess over the fine details of production ready code? We offer you the opportunity to showcase your talents to the biggest brands and consumer electronic platforms in the world. Working with us will give you the opportunity to explore the latest technologies on innovative and exciting projects.
+The perfect candidate has solid development skills, a high degree of independence and experience in building advanced and modern user experiences. We are looking for an energetic engineer with strong people and communication skills and a passion for innovation! Connekt Media is a funded pre-series A startup with existing revenues and products working with top brands in media, entertainment, and consumer electronic platforms.
+The Full Stack Software Engineer will build software applications and work as a full stack engineer leading front end and back end on various projects on the Connekt Media omni-channel platform.
+
+Responsibilities:
+Build and maintain enterprise-level applications using the latest technology stack (Python, ReactJS)
+Use continuous integration to build and deliver new platform capabilities and features
+Develop and enhance integration frameworks for applications on multiple platforms (IoT)
+Ensure developed code is production ready and scalable using Google Cloud infrastructure
+Develop into innovative UX/front end frameworks that are responsively designed for all screens
+Collaborate and build strong working relationships with internal teams including IT, Engineering & QA
+Provide support for other departmental projects as needed
+Maintain service levels as assigned by management
+Requirements​ :
+Passion for driving innovation and building robust, secure, and scalable software applications
+2-5 years of experience with Object oriented design and code
+We welcome all kinds of background in languages (Python, JavaScript, Java, Swift)
+Familiarity and hands-on experience developing and integrating with web services and/or APIs
+Experience with Agile methodology and continuous integration SDLC
+Strong communication skills (verbal and written) and time management skills
+Strong analytical and problem-solving skills
+Ability to be proactive with a sense of urgency
+Ability to read, understand and communicate technical documentation
+Be a self-starter, a highly motivated person able to work in a fast paced environment that is continually changing
+Bachelor’s degree in Computer Science, Engineering, or Mathematics
+
+Disclaimer: This job description should not be construed to imply that these requirements are the exclusive standards of the position. Incumbents may be required to perform other duties as assigned.
