@@ -1,0 +1,48 @@
+PROFESSIONAL
+SUMMARY
+SKILLS
+EDUCATION
+WORK HISTORY
+ANDREW MITCHELL
+andymitch559@gmail.com | (559) 853-7406 | 8000 Uptown Avenue, #M3097, Broomfield, CO 80021
+I am a US Navy veteran studying Computer Science at CU Boulder with a
+passion for creating things. I have work experience in system-level
+electronics troubleshooting, logistics management, and team leadership. In
+my free time, I am a brewer, a musician, and an overall problem solver. I
+am fluent in C++ 11 with fundamental knowledge in computer science, I
+am currently learning Python 3, and have an interest in data engineering
+and computer vision.
+C++ (proficient)
+Python/JS/HTML/CSS/C (familiar)
+Bash/Xcode/Atom
+Data Structures
+Discrete Structures
+Hardware diagnostics
+Troubleshooting
+System-level electrical design and
+integration
+Wiring schematics
+Logistics management
+Operations Management
+Intermediate in German
+University Of Colorado At Boulder - Boulder, CO / 2021
+Bachelor of Science: Computer Science
+Electronics Technician/Warehouse Manager / VT Milcom - San Diego, CA
+/ 11.2016 - 05.2017
+Assembled electrical and electronic systems and prototypes according
+to engineering data and knowledge of electrical principles, using hand
+tools and measuring instruments.
+Led warehouse improvement initiatives to advance operational
+efficiencies.
+Electronics Maintenance Supervisor / US Navy - San Diego, CA / 10.2014 -
+10.2016
+Supervised and trained 21 technicians on proper maintenance and
+operation.
+Generated a positive and effective workplace with a can-do attitude
+by displaying an interest and dedication to to the mentoring of junior
+employees while setting an example to follow.
+Electronics Technician / US Navy - San Diego, CA / 10.2010 - 10.2014
+Performed preventive and corrective maintenance down to
+component level on microwave receivers, high voltage transmitters,
+pneumatic systems, ac/dc motors, 2D and 3D radars, dry air systems,
+a/d and d/a conversion, fiber optics, and conditioning power supplies.
