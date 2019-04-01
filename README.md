@@ -18,21 +18,21 @@ WEEDR is a simple resume parser designed to match the most qualified candidates 
 
 ## How to Use
 
-   Be sure that you have at least C++11 installed.
+1. Be sure that you have at least C++11 installed.
   
-   Download the source files from Github.
+2. Download the source files from Github.
   
    * From terminal: `$ git clone https://github.com/andymitch/WEEDR.git`
   
    * From browser: [WEEDR](https://github.com/andymitch/WEEDR).
   
-   Insert any job listings into the positions folder.
+3. Insert any job listings into the positions folder.
   
-   Insert any resumes into the applicants folder.
+4. Insert any resumes into the applicants folder.
   
-   Compile: `g++ -std=c++11 WEEDR.cpp WEEDR_Driver.cpp -o weedr`.
+5. Compile: `g++ -std=c++11 WEEDR.cpp WEEDR_Driver.cpp -o weedr`.
   
-   Run: `./weedr [job listing] [resume] [resume…]`.
+6. Run: `./weedr [job listing] [resume] [resume…]`.
 
 ## Future Development
 
