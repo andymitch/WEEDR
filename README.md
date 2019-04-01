@@ -1,4 +1,4 @@
-## Final Project
+### Final Project
 Andrew Mitchell
 CSCI 2270-302
 
