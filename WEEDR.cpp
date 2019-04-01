@@ -198,7 +198,7 @@ void PriorityQueue::enqueue(Application applicant){
 void PriorityQueue::dequeue(){
   queue[0] = queue[currentSize-1];
   currentSize--;
-  repairDownward(0);
+  repairDown(0);
 }
 Applicant PriorityQueue::peek(){
   cout << "*************************************" << endl;
@@ -207,18 +207,26 @@ Applicant PriorityQueue::peek(){
   cout << "Phone: " << queue[0].phone << endl;
   cout << endl;
 }
-bool PriorityQueue::isEmpty(){
-  return (currentSize <= 0);
-}
 void PriorityQueue::repairUp(int index){
-
+  for(int i = index; i > 0; i--) if(priority(queue[i], queue[i/2])) swap(queue[i], queue[i-1]);
 }
 void PriorityQueue::repairDown(int index){
-
+  int left = (index*2)+1, right = (index*2)+2, smallest = index;
+  if(left < currentSize) if(priority(queue[left], queue[smallest])) smallest = left;
+  if(right < currentSize) if(priority(queue[right], queue[smallest])) smallest = right;
+  if(smallest != index){
+    swap(queue[smallest], queue[index]);
+    repairDownward(smallest);
+  }
 }
 bool PriorityQueue::priority(Application a, Application b){
-
+  if(a.keywords.size() < b.keywords.size()) return true;
+  if(a.keywords.size() > b.keywords.size()) return false;
+  if(a.position < b.position) return true;
+  return false;
 }
 void PriorityQueue::swap(Application* a, Application* b){
-
+  Application temp = *a;
+  *a = *b;
+  *b = temp;
 }

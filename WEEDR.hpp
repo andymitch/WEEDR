@@ -1,11 +1,3 @@
-//WEEDR Resume Parser
-/*
-Resume, job listing, common professional words - hash table
-Applicants - priority queue heap
-Keywords - vector
-Parse thru text to populate hash tables
-*/
-
 #pragma once
 #include <iostream>
 using namespace std;
@@ -23,7 +15,6 @@ struct LL{
 };
 
 class Hash{
-protected:
   LL** table;
   int size;
   int getHash(string); //hash function
@@ -50,7 +41,6 @@ struct Application{
   void setKeywords(string);
 };
 
-/* priority is based on keywords.size() and position */
 class PriorityQueue{
   Application* queue;
   int currentSize, maxSize;
@@ -63,6 +53,5 @@ public:
   ~PriorityQueue();
   void enqueue(Application);
   void dequeue();
-  Applicant peek();
-  bool isEmpty();
+  void peek();
 };

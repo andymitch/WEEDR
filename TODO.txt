@@ -1,12 +1,5 @@
 TO DO:
 
-Priority Queue:
-  enqueue
-  dequeue
-  repairUp
-  repairDown
-  priority
-  swap
 
 Review Driver:
   complete
