@@ -38,6 +38,7 @@ WEEDR is a simple resume parser designed to match the most qualified candidates 
 
   * Develop a UI (user interface) by either utilizing a GUI library (i.e. Qt, wxWidgets, etc.) or by rewriting program in the Javascript language to utilize HTML/CSS capabilities.
   * Allow for other file formats to be read than just .txt files.
+  * Continue to improving information parcing accuracy.
 
 ## Open Issues/Bugs
 
