@@ -1,0 +1,18 @@
+TO DO:
+
+Priority Queue:
+  enqueue
+  dequeue
+  repairUp
+  repairDown
+  priority
+  swap
+
+Review Driver:
+  complete
+
+Finish:
+  compile
+  clear faults
+  debug
+  annotate all variables and functions

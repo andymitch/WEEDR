@@ -11,6 +11,12 @@ Parse thru text to populate hash tables
 using namespace std;
 
 
+//HELPER FUNCTIONS
+bool inString(string, char); //Application::setInfo
+int digitsIn(string word); //Application::setInfo
+bool has(string word, char c); //Application::setResume, Hash::get
+vector<string> splitString(const string& str, char c); //Application::setResume
+
 struct LL{
   string word;
   LL* next;
@@ -23,10 +29,15 @@ protected:
   int getHash(string); //hash function
   void add(string); //add string to table
 public:
-  Hash(string);
+  Hash(); //ignore object
+  Hash(string, Hash); //keywords object
   ~Hash();
-  void load(string); //load full resume to Hash table
-  bool exists(string); //if string is in table
+  int getHash(string);
+  void add(string);
+  LL* search(string);
+  bool exists(string);
+  void get(); //for ignore object
+  void get(string, Hash); //for keywords object
 };
 
 struct Application{
@@ -34,27 +45,24 @@ struct Application{
   char phone [10];
   int position; //when they applied
   vector<string> keywords;
-  void setInfo(string);
-  void loadResume(string);
+  Application(string, int);
+  void setInfo(string, Hash);
+  void setKeywords(string);
 };
 
 /* priority is based on keywords.size() and position */
 class PriorityQueue{
   Application* queue;
   int currentSize, maxSize;
-  void repairUpward(int);
-  void repairDownward(int);
+  void repairUp(int);
+  void repairDown(int);
   bool priority(Application, Application);
   void swap(Application*, Application*);
 public:
   PriorityQueue(int);
   ~PriorityQueue();
-  void enqueue();
+  void enqueue(Application);
   void dequeue();
   Applicant peek();
-  bool isFull();
   bool isEmpty();
 };
-
-bool inString(string, char);
-bool isPhone(string);

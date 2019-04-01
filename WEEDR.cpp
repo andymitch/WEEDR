@@ -7,23 +7,19 @@ using namespace std;
 
 //HELPER FUNCTIONS
 /*****************************************************************************/
-//Application::setInfo
 bool inString(string word, char c){
   for(int i = 0; i < word.length(); i++) if(c == word[i]) return true;
   return false;
 }
-//Application::setInfo
 int digitsIn(string word){
   int count = 0;
   for(int i = 0; i < word.length(); i++) if(word[i].isDigit()) count++;
   return count;
 }
-//Application::setResume, Hash::get
 bool has(string word, char c){
   for(int i = 0; i < word.length(); i++) if(word[i] == c) return true;
   return false;
 }
-//Application::setResume
 vector<string> splitString(const string& str, char c){
    vector<string> words;
    string word;
@@ -35,33 +31,63 @@ vector<string> splitString(const string& str, char c){
 //HASH CLASS
 /*****************************************************************************/
 Hash::Hash(){
-  //ignore object
   size = 100;
   table = new LL*[size];
   get("ignoreWords.txt");
 }
 Hash::Hash(string file, Hash ignore){
-  //keywords object
   size = 20;
   table = new LL*[size];
   get(file, ignore);
 }
 Hash::~Hash(){
-
+  for(int i = 0; i < size; i++){
+    LL* next, current = table[i];
+    while (current != nullptr){
+      next = current->next;
+      free(current);
+      current = next;
+    }
+    table[i] = nullptr;
+  }
+  delete [] table;
 }
 int Hash::getHash(string word){
-
+  int hash = 5381;
+  for(int i = 0; i < word.length(); i++) hash = (hash*33)+word[i];
+  hash = hash%hashTableSize;
+  if(hash < 0) hash += hashTableSize;
+  return hash;
 }
 void Hash::add(string word){
+  if(!exists(word)){
+    int index = getHash(word);
+    LL* prev = nullptr, current = table[index];
+    while(current != nullptr){
+      prev = current;
+      current = current->next;
+    }
+    current = new LL;
+    current->word = word;
+    current->next = nullptr;
+    if(prev != nullptr) prev->next = current;
+    else table[index] = current;
+  }
+}
+LL* Hash::search(string word){
   int index = getHash(word);
-  //table[index]...
+  LL* current = table[index];
+  while(current != nullptr){
+    if(current->word == word) break;
+    current = current->next;
+  }
+  return current;
 }
 bool Hash::exists(string word){
-  //word exists in hash table
-
+  LL* exists = search(word);
+  return(exists != nullptr);
 }
 void Hash::get(){
-  //for ignore object
   ifstream infile;
   string word;
   infile.open("ignoreWords.txt");
@@ -79,7 +105,6 @@ void Hash::get(){
   }
 }
 void Hash::get(string file, Hash ignore){
-  //for keywords object
   ifstream infile;
   string word;
   infile.open("positions/"+file);
@@ -100,7 +125,7 @@ void Hash::get(string file, Hash ignore){
 /*****************************************************************************/
 Application::Application(string file, int pos){
   setInfo(file);
-  getResume(file);
+  setKeywords(file);
   position = pos;
 }
 void Application::setInfo(string file, Hash ignore){
@@ -137,7 +162,7 @@ void Application::setInfo(string file, Hash ignore){
   }
   inFile.close();
 }
-void Application::setResume(string file){
+void Application::setKeywords(string file){
   ifstream infile;
   string word;
   infile.open("applicants/"+file);
@@ -165,7 +190,7 @@ PriorityQueue::PriorityQueue(int size){
 PriorityQueue::~PriorityQueue(){
   delete[] queue;
 }
-void PriorityQueue::enqueue(string file){
+void PriorityQueue::enqueue(Application applicant){
 
 }
 void PriorityQueue::dequeue(){
@@ -181,10 +206,10 @@ Applicant PriorityQueue::peek(){
 bool PriorityQueue::isEmpty(){
   return (currentSize <= 0);
 }
-void PriorityQueue::repairUpward(int index){
+void PriorityQueue::repairUp(int index){
 
 }
-void PriorityQueue::repairDownward(int index){
+void PriorityQueue::repairDown(int index){
 
 }
 bool PriorityQueue::priority(Application a, Application b){
