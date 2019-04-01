@@ -191,10 +191,14 @@ PriorityQueue::~PriorityQueue(){
   delete[] queue;
 }
 void PriorityQueue::enqueue(Application applicant){
-
+  queue[currentQueueSize] = applicant;
+  repairUp(currentQueueSize);
+  currentSize++;
 }
 void PriorityQueue::dequeue(){
-
+  queue[0] = queue[currentSize-1];
+  currentSize--;
+  repairDownward(0);
 }
 Applicant PriorityQueue::peek(){
   cout << "*************************************" << endl;
