@@ -1,13 +1,14 @@
 #pragma once
 #include <iostream>
+#include <sstream>
 #include <vector>
+#include <cctype>
 using namespace std;
 
 
 //HELPER FUNCTIONS
-bool inString(string, char); //Application::setInfo
 int digitsIn(string word); //Application::setInfo
-bool has(string word, char c); //Application::setResume, Hash::get
+bool has(string word, char c); //Application::setInfo, Application::setResume, Hash::get
 vector<string> splitString(const string& str, char c); //Application::setResume
 
 struct LL{
@@ -22,7 +23,7 @@ class Hash{
   void add(string); //add string to table
 public:
   Hash(); //ignore object
-  Hash(string, Hash); //keywords object
+  Hash(string, Hash&); //keywords object
   ~Hash();
   LL* search(string);
   bool exists(string);
@@ -35,9 +36,10 @@ struct Application{
   char phone [10];
   int position; //when they applied
   vector<string> keywords;
-  Application(string, int);
-  void setInfo(string, Hash);
-  void setKeywords(string);
+  //Application();
+  //Application(string, int, Hash&, Hash&);
+  void setInfo(string, Hash&);
+  void setKeywords(string, Hash&, Hash&);
 };
 
 class PriorityQueue{
@@ -53,4 +55,5 @@ public:
   void enqueue(Application);
   void dequeue();
   void peek();
+  bool isEmpty();
 };
