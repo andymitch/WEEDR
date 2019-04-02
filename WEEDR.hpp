@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 using namespace std;
 
 
@@ -23,8 +24,6 @@ public:
   Hash(); //ignore object
   Hash(string, Hash); //keywords object
   ~Hash();
-  int getHash(string);
-  void add(string);
   LL* search(string);
   bool exists(string);
   void get(); //for ignore object

@@ -9,8 +9,11 @@ int main(int argc, char** argv){
   Hash ignore; //hash table of ignore words
   Hash listing(argv[1], ignore); //hash table of words from a job listing
 
-  for(int i = 2; i < argc; i++) applicants.enqueue(argv[i]); //queue up applicants
-  cout << "Press ENTER to see the next Applicant" << endl;
+  for(int i = 2; i < argc; i++){
+    Application applicant = new Application(argv[i], i-1);
+    applicants.enqueue(applicant); //queue up applicants
+  }
+  cout << "Press ENTER to see the next Applicant." << endl;
   string enter;
   cin >> enter;
   while(!applicants.isEmpty()){

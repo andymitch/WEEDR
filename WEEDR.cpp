@@ -33,7 +33,7 @@ vector<string> splitString(const string& str, char c){
 Hash::Hash(){
   size = 100;
   table = new LL*[size];
-  get("ignoreWords.txt");
+  this.get();
 }
 Hash::Hash(string file, Hash ignore){
   size = 20;
@@ -42,7 +42,7 @@ Hash::Hash(string file, Hash ignore){
 }
 Hash::~Hash(){
   for(int i = 0; i < size; i++){
-    LL* next, current = table[i];
+    LL* next, current = *table[i];
     while (current != nullptr){
       next = current->next;
       free(current);
@@ -91,7 +91,7 @@ void Hash::get(){
   ifstream infile;
   string word;
   infile.open("ignoreWords.txt");
-  if(!infile) cout << file << "does not exist." << endl;
+  if(!infile) cout << "ignoreWords.txt is missing from directory." << endl;
   else{
     infile >> word;
     if(has(word, '/')){
@@ -121,26 +121,26 @@ void Hash::get(string file, Hash ignore){
   }
 }
 
-//APPLICATION CLASS
+//APPLICATION STRUCT
 /*****************************************************************************/
-Application::Application(string file, int pos){
-  setInfo(file);
+Application::Application(string file, int pos, Hash ignore){
+  setInfo(file, ignore);
   setKeywords(file);
   position = pos;
 }
 void Application::setInfo(string file, Hash ignore){
   ifstream infile;
-  inFile.open("applicants/"+file); //resume should be in folder 'applicants'
+  infile.open("applicants/"+file); //resume should be in folder 'applicants'
   string word;
   bool gotEmail = false, gotPhone = false;
-  if(!inFile) cout << file << " does not exist." << endl;
+  if(!infile) cout << file << " does not exist." << endl;
   else{
-    inFile >> word;
-    while(ignore.exists(word)) inFile >> word; //bypass any words before name
+    infile >> word;
+    while(ignore.exists(word)) infile >> word; //bypass any words before name
     if(!ignore.exists(word)) first = word; //get first name
-    inFile >> last; //get last name
-    while(inFile){
-      inFile >> word;
+    infile >> last; //get last name
+    while(infile){
+      infile >> word;
       if(inString(word, @)){ //get email address
         email = word;
         gotEmail = true;
@@ -160,7 +160,7 @@ void Application::setInfo(string file, Hash ignore){
       if(gotEmail && gotPhone) break; //stop when email and phone are found
     }
   }
-  inFile.close();
+  infile.close();
 }
 void Application::setKeywords(string file){
   ifstream infile;
