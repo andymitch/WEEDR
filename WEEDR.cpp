@@ -34,7 +34,7 @@ void clean(vector<string>& v){
 bool nonEssential(char c){
   return(c==','||c=='.'||c==';'||c==':'||c=='\''||c=='\"'||c=='!');
 }
-void clean(string word){
+void clean(string& word){
   for(int i = 0; i < word.length(); i++){
     if(nonEssential(word[i])) word.erase(word.begin()+i);
     if(isalpha(word[i])) word[i] = tolower(word[i]);
@@ -109,15 +109,18 @@ void Hash::get(){
   infile.open("ignoreWords.txt");
   if(!infile) cout << "ignoreWords.txt is missing from directory." << endl;
   else{
-    infile >> word;
-    if(has(word, '/')){
-      vector<string> words = splitString(word, '/');
-      for(auto a : words) add(a);
+    while(infile){
+      infile >> word;
+      cout << word << endl;
+      if(has(word, '/')){
+        vector<string> words = splitString(word, '/');
+        for(auto a : words) add(a);
+      }
+      else if(has(word, '-')){
+        vector<string> words = splitString(word, '-');
+        for(auto a : words) add(a);
+      }else add(word);
     }
-    else if(has(word, '-')){
-      vector<string> words = splitString(word, '-');
-      for(auto a : words) add(a);
-    }else add(word);
   }
 }
 void Hash::get(string file, Hash ignore){
@@ -126,24 +129,22 @@ void Hash::get(string file, Hash ignore){
   infile.open("positions/"+file);
   if(!infile) cout << file << "does not exist." << endl;
   else{
-    infile >> word;
-    if(has(word, '/')){
-      vector<string> words = splitString(word, '/');
-      for(auto a : words) if(!ignore.exists(a)) add(a);
-    }else if(has(word, '-')){
-      vector<string> words = splitString(word, '-');
-      for(auto a : words) if(!ignore.exists(a)) add(a);
-    }else{if(!ignore.exists(word)) add(word);}
+    while(infile){
+      infile >> word;
+      cout << word << endl;
+      if(has(word, '/')){
+        vector<string> words = splitString(word, '/');
+        for(auto a : words) if(!ignore.exists(a)) add(a);
+      }else if(has(word, '-')){
+        vector<string> words = splitString(word, '-');
+        for(auto a : words) if(!ignore.exists(a)) add(a);
+      }else if(!ignore.exists(word)) add(word);
+    }
   }
 }
 
 //APPLICATION STRUCT
 /*****************************************************************************/
-/*Application::Application(string file, int pos, Hash& ignore, Hash& key){
-  setInfo(file, ignore);
-  setKeywords(file, ignore, key);
-  position = pos;
-}*/
 void Application::setInfo(string file, Hash& ignore){
   ifstream infile;
   infile.open("applicants/"+file); //resume should be in folder 'applicants'
@@ -152,9 +153,15 @@ void Application::setInfo(string file, Hash& ignore){
   if(!infile) cout << file << " does not exist." << endl;
   else{
     infile >> word;
-    while(ignore.exists(word)) infile >> word; //bypass any words before name
+    clean(word);
+    while(ignore.exists(word)){
+      infile >> word; //bypass any words before name
+      clean(word);
+    }
     if(!ignore.exists(word)) first = word; //get first name
-    infile >> last; //get last name
+    infile >> word; //get last name
+    clean(word);
+    last = word;
     while(infile){
       infile >> word;
       string num;
