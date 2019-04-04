@@ -173,9 +173,10 @@ void PriorityQueue::peek(){
   cout << "Email: " << queue[0].email << endl;
   cout << "Phone: (" << queue[0].phone[0] << queue[0].phone[1] << queue[0].phone[2] << ")" << queue[0].phone[3] << queue[0].phone[4] << queue[0].phone[5] << "-" << queue[0].phone[6] << queue[0].phone[7] << queue[0].phone[8] << queue[0].phone[9] << endl;
   cout << "Number of matching words: " << queue[0].keywords.size() << endl;
-  cout << "Words: ";
-  for(auto k : queue[0].keywords) cout << k << " ";
-  cout << "\nnth to apply: " << queue[0].position << "\n\n";
+  //cout << "Words: ";
+  //for(auto k : queue[0].keywords) cout << k << " ";
+  //cout << endl;
+  cout << "nth to apply: " << queue[0].position << "\n\n";
 }
 void PriorityQueue::repairUp(int index){
   for(int i = index; i > 0; i--) if(priority(queue[i], queue[i/2])) swap(&queue[i], &queue[i-1]);

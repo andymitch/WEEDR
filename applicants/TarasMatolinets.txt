@@ -69,7 +69,7 @@ Google play:https://play.google.com/store/apps/details?id=co.otenti
 Android developer
 Project Name: PlanckMail
 Project Description:
-This is mail application.The main goal of application it's keep several mail account in one application (Gmail, Microsoft, Yahoo
+This is mail application.The main goal of application its keep several mail account in one application (Gmail, Microsoft, Yahoo
 and eth. ).
 You will be able to watch calendar events , create, delete, update events, send emails, looking basic information about
 users,downloading and uploading photos,files from different accounts and eth...
