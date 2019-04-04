@@ -1,0 +1,80 @@
+Mitch Samuels Frontend Developer hello@ceev.io 7605764824
+linkedin.com/in/mitchas
+Minneapolis, Minnesota
+github.com/mitchas
+Frontend-focused web developer with a passion for design. I have experience working
+with Angular, React, Django, Python, Go, MEAN stack, jQuery, and countless other
+frontend and backend frameworks and tools, but I spend most of my time fighting with
+HTML, Javascript, and CSS/SASS/LESS.
+PROJECTS
+ineedaresu.me
+Mar 2015
+A dead-simple resume generator that lets you create a
+resume in minutes. Built on AngularJS using
+local storage to save user data. The generator creates a
+well-designed resume that is printable or can be
+downloaded as a PDF.
+Ceev.io
+February 2018
+This is my latest project - basically a re-do of
+ineedaresu.me since I sold that and no longer have
+access to it. Ceev makes creating resumes insanely
+simple on any device. Users can save their resumes to
+access anywhere, and the webapp offers a ton of
+customization options to create an awesome resume.
+Open Source Electron Apps
+December 2017
+I have a few open-source Electron desktop apps
+available on my GitHub @mitchas. They're tools that
+I've created because they're tools I wanted to use, so I
+developed them and released the source. One is a
+floating transparent web browser, and another is a
+super minimal FTP client.
+LANGUAGES
+English Native or bilingual
+German Limited working
+SKI L LS
+CSS, Web Development, JavaScript, Web Design, User
+Interface Design, User Interface, Mobile Devices, User
+Experience, Graphic Design, HTML5, HTML, WordPress,
+Microsoft Excel, Photoshop, PHP, HTML 5, jQuery,
+Dreamweaver, Leadership
+EXPERIENCE
+Frontend Developer Contractor
+Jun 2014 – Present Madison, WI
+• Create and maintain a style guide for use throughout
+our group's web applications to ensure consistent
+design, fonts, colors, UI elements, etc.
+• Design and apply styling and layout changes to
+existing applications.
+• Design and develop map-based web applications.
+• Design, develop, and maintain the group home page
+at wim.usgs.gov.
+• Ensure mobile compatibility/responsiveness of all
+group websites and applications on all platforms and
+browsers.
+• Make sure the sites and applications meet federal
+government standards and requirements (at least if
+they are reasonable requirements :)).
+Freelance Frontend Web Developer Mitchs.co
+Jan 2009 – Present Minnesota
+• Design, develop, and deploy full-stack websites for
+clients, normally using HTML, CSS/LESS, Angular, and
+Firebase if needed.
+• Communicate with potential clients, outlining their
+needs and my abilities.
+Lead Front End Engineer Export Abroad
+May 2014 – Jan 2017 Madison, WI
+• Advise team on usage of Frontend tools and
+frameworks - Angular, Django, Bootstrap, etc.
+• Design and develop the consumer-facing home page
+at exportabroad.com, as well as the Wordpress blog at
+blog.exportabroad.com.
+• Ensure and develop mobile
+compatibility/responsiveness of all Export Abroad
+websites.
+• Debug issues within home page and web application.
+• Wireframe, design, and develop the enterprise web
+application on Python/Django with Angular.
+• Design and develop the company style guide to
+ensure consistent styles though out the web and print.

@@ -111,7 +111,10 @@ void Application::setInfo(string file, Hash& ignore){
       word[0] = toupper(word[0]);
       first = word; //get first name
     }
-    infile >> last; //get last name
+    infile >> word;
+    cleanIt(word);
+    word[0] = toupper(word[0]);
+    last = word; //get last name
     while(infile){
       infile >> word;
       string num;

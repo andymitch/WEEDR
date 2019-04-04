@@ -1,0 +1,18 @@
+Senior C++ Software Engineer
+CANVAS TECHNOLOGY | GREATER BOULDER AREA
+We are seeking C++ Engineers to work in our core robotics team developing a state-of-the-art computer vision-based autonomy stack. You will be closely integrated with the research and development of an advanced robotic system, both developing and optimizing features.
+Required
+BS or greater in Computer Science/Engineering, Statistics, Mathematics, or equivalent.
+5+ years of practical software engineering experience with C++ in a Linux or Unix environment.
+Experience with object-oriented design using C++.
+A love for solving difficult challenges.
+Desired
+Advanced Math background in linear algebra and calculus (for example 3D graphics, projection, reconstruction, filtering, estimators, etc.).
+Familiarity with language constructs included in modern versions of C++
+Familiarity with hardware-software integration of sensors, motor controllers and embedded systems.
+Demonstrable experience in building, programming and integrating software and hardware for robotic systems
+Why work for Canvas?
+We are a robotics company changing the way materials are moved. We have a driving passion for creating ground-breaking products and a desire to have big impact. Our environment is exciting, challenging, collaborative, and fun...and we’re building game-changing products. You’ll work with a tight-knit and creative team on state-of-the art solutions to real problems.
+Our office is located in Boulder CO, in the foothills of the Rocky Mountains. Many of us commute by bike and you’ll be a short distance from some of the best hiking, climbing and skiing in the U.S. Boulder offers a unique mix of outdoors, fine dining, microbrewing and much more. Plus, it’s just a happy place.
+We’re looking for motivated and passionate individuals who love to build things and solve problems. If this is you, please send us your resume and include a clear and concise cover letter to help us understand more about you, including why you are interested in Canvas, why you are leaving or have left your current position, and anything else that will give us a better sense of who you are and what you are looking for.
+We are an equal opportunity employer and do not discriminate against any employee or applicant for employment because of race, color, sex, age, or other protected class.

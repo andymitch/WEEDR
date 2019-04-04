@@ -99,7 +99,7 @@ int main(int argc, char** argv){
     applicant.position = i-1;
     applicants.enqueue(applicant); //queue up applicants
   }
-  cout << "Type something to see the next Applicant." << endl;
+  cout << "Type anything to see the next Applicant." << endl;
   string enter;
   cin >> enter;
   while(!applicants.isEmpty()){

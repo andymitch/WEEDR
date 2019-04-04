@@ -1,0 +1,168 @@
+Taras Matolinets
+CONTACT
+Lviv/Kiev Ukraine E-mail: ernest.hyst@gmail.com
+Website:
+https://www.linkedin.com/in/tarasmatolinets
+ABOUT
+ME
+There is couple principles which I use in my work routine.
+1. Client always has to satisfied of work.
+1.1Always trying to understand the business goals of client product.
+1.2Help to create business plan for reach the goal.
+2. Quality of work.
+2.1During development always try to concentrate on high quality of product.
+2.2 Code always has to be testable and reusable
+2.3 Following of best practices and new technologies.
+3. Be always in time.
+3.1 During planning of work it’s always important to deliver in time
+4. Communication is important.
+4.1During development lifecycle client should be up to date with latest stable builds.
+4.2Reports about our work.
+5. Drink a cup of coffee during your break.
+5.1Also, it’s important communicate with coworkers for stress relief.
+6. Strict to the strategy process.
+6.1 Always trying to follow selected strategy process (Scrum, Waterfowl a)
+Except all principles above if you want to have all development process to go smoothly you can contact always to me. Because
+I have experience with:
+1. Continues integration (Jenkins, AppCenter…)
+2. Distributing release to clients.
+3. Developing and covering code by tests
+4. Publishing apps to the store.
+Scope of technologies and programming languages which I’m using during development process:
+1. Kotlin
+2. Android
+3. XML, SOAP
+4. JAVA
+5. Groovy
+6. Gradle
+7. JSON
+8. GIT
+Hope after all things which I have describe above you will enjoy working with me :)
+By the way, I’m passion on learning French languages. I just started, but I really like this language :)
+Taras Matolinets 1
+Fareportal 09 12 2016 — Present
+Otentico 01 04 2015 — Present
+PlankLabs 30 04 2015 — 06 06 2016
+WORK EXPERIENCE
+Android Developer
+Project Name: CheapOAir/OneTravel
+Project Description:
+Multimillion users downloaded app which makes traveling more easy. You can book flights, cars, hotels in several clicks.
+Google play:https://play.google.com/store/apps/details?id=com.fp.cheapoair
+Googleplay: https://play.google.com/store/apps/details?id=com.wkt.onetravel.android
+Responsibilities in the project:
+1. Develop new features for OneTravel & CheapOAir.
+2. Refactoring application(implemented Dagger 2, obfuscation and MVP)
+3. AppIndexing, Deffered and normal Deeplinking
+4. Work closely with Google Analytics and Ecommerce
+5. AppsFlyer, Kahuna, Optimizely
+6. Gradle Build process optimization
+7. Unit tests, CI (Jenkins)
+8. Create Android TV application
+9. Take a part of organizing team processes
+Project Team Size: 12
+Android developer
+Project Name: Otentico
+Project Description:
+Android App to detect fake products using NFC protocol and tags.
+Google play:https://play.google.com/store/apps/details?id=co.otenti
+Android developer
+Project Name: PlanckMail
+Project Description:
+This is mail application.The main goal of application it's keep several mail account in one application (Gmail, Microsoft, Yahoo
+and eth. ).
+You will be able to watch calendar events , create, delete, update events, send emails, looking basic information about
+users,downloading and uploading photos,files from different accounts and eth...
+Responsibilities in project:
+1. Developed email-client application with server integration Nylas for phones and tablets.
+2. I have done integration with DropBox, Gmail, OneDrive, Yahoo clouds
+3. Integrate offline mode for email client
+Taras Matolinets 2
+No company 03 03 2015 — 03 04 2015
+Lezgro 04 22 2014 — 04 01 2015
+Lezgro 04 22 2014 — 04 01 2015
+ArtfulBits 31 07 2013 — 04 22 2014
+Project Team Size: 4
+Android Developer
+Project Name: Video Diary
+Project Description:
+This application is a great discovery for those who have their video blogs. If you are a YouTube, Facebook or other social
+network user, VIDEO DIARY is exactly what you need!
+You don’t need to be connected to the Internet to use this application. Having a modern design, it enables you with an amazing
+opportunity to make notes and diary entries, and then share them with your friends.
+Google play:https://play.google.com/store/apps/details?id=mti.com.videodiary
+Responsibilities in the project:
+1. Create and developed app with Dagger2 + RXJAVA + MVP + layer pattern
+Project Team Size: 1
+Android Developer
+Project Name: Wirkn
+Project Description:
+This app gives users the ability to create a video profile that allows them to “Show Their Personality” to apply for employment
+— certainly a different direction that rivals Workopolis and Monster with the standard job postings.
+http://www.wirkn.com/
+http://www.betakit.com/wirkn-receives-400000-in-funding-brings-on-derek-szeto-as-ceo/
+Google play:https://play.google.com/store/apps/details?id=com.wirkn.wirkn
+Responsibilities in project:
+1. Took the main role of development and create project architecture
+Project Team Size: 6
+Android Developer
+Project Name: My City
+Project Description:
+The main idea of the project is to make your city clean. When you see some some traffic jams or graffiti on the walls, garbage in
+the streets, fallen trees, you can write a report on all of it, send it to your local government and check the progress of the current
+problem solution with the help of My city app.
+Responsibilities in project:
+1. Create project architecture
+2. Develop the whole app
+Project Team Size: 1 person
+Taras Matolinets 3
+Content Service 12 07 2012 — 01 14 2013
+Computer and Economic Science 09 01 2007 — 05 01 2012
+Military Certeficate 09 01 2009 — 08 01 2011
+Android developer
+Project Name: KbCore
+Project Description:
+The KB Suite replaces old, time consuming, labor intensive, error-prone, legacy paper-based adverse event reporting systems
+with a highly automated modular suite focused on recording identified problems, analyzing them and communicating solutions
+to management in close to real-time.Web site : http://kbco.re/
+Responsibilities in project:
+1. Develop new feature for mobile & tablets
+Project Team Size: 2 persons
+Java developer
+Project Name: Content Service
+Project Description:This project creates content service for customers which is used in web store.
+Responsibilities:
+1. Bug fix
+Project Team Size: 3 persons
+QUALIFICATIONS
+Ukrainian:
+native
+English:
+listening - upper intermediate+
+writing - intermediate
+reading - upper intermediate
+Russian
+listening - advanced
+writing - upper intermediate
+reading -upper intermediate
+EDUCATION
+Lviv National Ivan Franko University
+Diploma: Specialist Degree
+Titleofqualificationawarded: Major in Computer and Economic Science
+High Military University
+Diploma: Intelligence Lieutenant Certificate
+Taras Matolinets 4
+SoftServe Academy 02 02 2013 — 05 02 2013
+Secondary School 01 09 1996 — 31 05 2007
+Java IT Projects
+Stryi School №1
+REFERENCES
+LinkenIn page:
+https://www.linkedin.com/in/tarasmatolinets
+Facebook
+https://www.facebook.com/taras.matolinets
+Github:
+https://github.com/TarasMatolinets
+UpWork:
+http://www.upwork.com/o/profiles/users/_~012785f00dee2ac800/
+Taras Matolinets 5
