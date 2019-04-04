@@ -19,16 +19,13 @@ struct LL{
 class Hash{
   LL** table;
   int size;
-  int getHash(string); //hash function
-  void add(string); //add string to table
+  unsigned int getHash(string); //hash function
 public:
-  Hash(); //ignore object
-  Hash(string, Hash&); //keywords object
+  Hash(int);
   ~Hash();
+  void add(string); //add string to table
   LL* search(string);
   bool exists(string);
-  void get(); //for ignore object
-  void get(string, Hash); //for keywords object
 };
 
 struct Application{
@@ -36,8 +33,6 @@ struct Application{
   char phone [10];
   int position; //when they applied
   vector<string> keywords;
-  //Application();
-  //Application(string, int, Hash&, Hash&);
   void setInfo(string, Hash&);
   void setKeywords(string, Hash&, Hash&);
 };

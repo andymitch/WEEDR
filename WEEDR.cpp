@@ -26,32 +26,21 @@ vector<string> splitString(const string& str, char c){
   while (getline(ss, word, c)) words.push_back(word);
   return words;
 }
-void clean(vector<string>& v){
-  auto end = v.end();
-  for (auto it = v.begin(); it != end; ++it) end = remove(it+1, end, *it);
-  v.erase(end, v.end());
+bool nonEss(char c){
+  return(c==','||c=='.'||c==';'||c==':'||c=='\''||c=='\"'||c=='!'||c=='('||c==')');
 }
-bool nonEssential(char c){
-  return(c==','||c=='.'||c==';'||c==':'||c=='\''||c=='\"'||c=='!');
-}
-void clean(string& word){
+void cleanIt(string& word){
   for(int i = 0; i < word.length(); i++){
-    if(nonEssential(word[i])) word.erase(word.begin()+i);
+    if(nonEss(word[i])) word.erase(word.begin()+i);
     if(isalpha(word[i])) word[i] = tolower(word[i]);
   }
 }
 
 //HASH CLASS
 /*****************************************************************************/
-Hash::Hash(){
-  size = 100;
+Hash::Hash(int sz){
+  size = sz;
   table = new LL*[size];
-  this->get();
-}
-Hash::Hash(string file, Hash& ignore){
-  size = 20;
-  table = new LL*[size];
-  get(file, ignore);
 }
 Hash::~Hash(){
   for(int i = 0; i < size; i++){
@@ -66,15 +55,14 @@ Hash::~Hash(){
   }
   delete [] table;
 }
-int Hash::getHash(string word){
-  int hash = 5381;
+unsigned int Hash::getHash(string word){
+  unsigned int hash = 5381;
   for(int i = 0; i < word.length(); i++) hash = (hash*33)+word[i];
   hash = hash%size;
   if(hash < 0) hash += size;
   return hash;
 }
 void Hash::add(string word){
-  clean(word);
   if(!exists(word)){
     int index = getHash(word);
     LL* prev = nullptr;
@@ -103,45 +91,6 @@ bool Hash::exists(string word){
   LL* exists = search(word);
   return(exists != nullptr);
 }
-void Hash::get(){
-  ifstream infile;
-  string word;
-  infile.open("ignoreWords.txt");
-  if(!infile) cout << "ignoreWords.txt is missing from directory." << endl;
-  else{
-    while(infile){
-      infile >> word;
-      cout << word << endl;
-      if(has(word, '/')){
-        vector<string> words = splitString(word, '/');
-        for(auto a : words) add(a);
-      }
-      else if(has(word, '-')){
-        vector<string> words = splitString(word, '-');
-        for(auto a : words) add(a);
-      }else add(word);
-    }
-  }
-}
-void Hash::get(string file, Hash ignore){
-  ifstream infile;
-  string word;
-  infile.open("positions/"+file);
-  if(!infile) cout << file << "does not exist." << endl;
-  else{
-    while(infile){
-      infile >> word;
-      cout << word << endl;
-      if(has(word, '/')){
-        vector<string> words = splitString(word, '/');
-        for(auto a : words) if(!ignore.exists(a)) add(a);
-      }else if(has(word, '-')){
-        vector<string> words = splitString(word, '-');
-        for(auto a : words) if(!ignore.exists(a)) add(a);
-      }else if(!ignore.exists(word)) add(word);
-    }
-  }
-}
 
 //APPLICATION STRUCT
 /*****************************************************************************/
@@ -153,15 +102,16 @@ void Application::setInfo(string file, Hash& ignore){
   if(!infile) cout << file << " does not exist." << endl;
   else{
     infile >> word;
-    clean(word);
+    cleanIt(word);
     while(ignore.exists(word)){
       infile >> word; //bypass any words before name
-      clean(word);
+      cleanIt(word);
     }
-    if(!ignore.exists(word)) first = word; //get first name
-    infile >> word; //get last name
-    clean(word);
-    last = word;
+    if(!ignore.exists(word)){
+      word[0] = toupper(word[0]);
+      first = word; //get first name
+    }
+    infile >> last; //get last name
     while(infile){
       infile >> word;
       string num;
@@ -186,28 +136,6 @@ void Application::setInfo(string file, Hash& ignore){
     }
   }
   infile.close();
-}
-void Application::setKeywords(string file, Hash& ignore, Hash& key){
-  ifstream infile;
-  string word;
-  infile.open("applicants/"+file);
-  if(!infile) cout << file << "does not exist." << endl;
-  else{
-    while(infile){
-      infile >> word;
-      clean(word);
-      if(has(word, '/')){
-        vector<string> words = splitString(word, '/');
-        for(auto a : words) if(!ignore.exists(a) && key.exists(a)) keywords.push_back(a);
-      }
-      else if(has(word, '-')){
-        vector<string> words = splitString(word, '-');
-        for(auto a : words) if(!ignore.exists(a) && key.exists(a)) keywords.push_back(a);
-      }else if(!ignore.exists(word) && key.exists(word)) keywords.push_back(word);
-    }
-  }
-  infile.close();
-  clean(keywords);
 }
 
 //PRIORITY QUEUE HEAP CLASS
@@ -235,7 +163,10 @@ void PriorityQueue::peek(){
   cout << "Name: " << queue[0].first << ", " << queue[0].last << endl;
   cout << "Email: " << queue[0].email << endl;
   cout << "Phone: " << queue[0].phone << endl;
-  cout << endl;
+  cout << "Number of matching words: " << queue[0].keywords.size() << endl;
+  cout << "Words: ";
+  for(auto k : queue[0].keywords) cout << k << " ";
+  cout << "\nnth to apply: " << queue[0].position << "\n\n";
 }
 void PriorityQueue::repairUp(int index){
   for(int i = index; i > 0; i--) if(priority(queue[i], queue[i/2])) swap(&queue[i], &queue[i-1]);
@@ -250,8 +181,8 @@ void PriorityQueue::repairDown(int index){
   }
 }
 bool PriorityQueue::priority(Application a, Application b){
-  if(a.keywords.size() < b.keywords.size()) return true;
-  if(a.keywords.size() > b.keywords.size()) return false;
+  if(a.keywords.size() > b.keywords.size()) return true;
+  if(a.keywords.size() < b.keywords.size()) return false;
   if(a.position < b.position) return true;
   return false;
 }
