@@ -42,4 +42,4 @@ WEEDR is a simple resume parser designed to match the most qualified candidates 
 
 ## Open Issues/Bugs
 
-Read TODO.txt
+fix phone number parsing
