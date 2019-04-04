@@ -7,9 +7,12 @@ using namespace std;
 
 
 //HELPER FUNCTIONS
-int digitsIn(string word); //Application::setInfo
-bool has(string word, char c); //Application::setInfo, Application::setResume, Hash::get
-vector<string> splitString(const string& str, char c); //Application::setResume
+int digitsIn(string);
+bool has(string, char);
+vector<string> splitString(const string&, char);
+bool nonEssential(char);
+void clean(string&);
+void clean(vector<string>&);
 
 struct LL{
   string word;

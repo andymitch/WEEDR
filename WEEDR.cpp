@@ -27,13 +27,18 @@ vector<string> splitString(const string& str, char c){
   return words;
 }
 bool nonEss(char c){
-  return(c==','||c=='.'||c==';'||c==':'||c=='\''||c=='\"'||c=='!'||c=='('||c==')');
+  return(c==','||c=='.'||c==';'||c==':'||c=='\''||c=='\"'||c=='!'||c=='('||c==')'||c=='-');
 }
-void cleanIt(string& word){
+void clean(string& word){
   for(int i = 0; i < word.length(); i++){
     if(nonEss(word[i])) word.erase(word.begin()+i);
     if(isalpha(word[i])) word[i] = tolower(word[i]);
   }
+}
+void clean(vector<string>& v){
+  auto end = v.end();
+  for (auto it = v.begin(); it != end; ++it) end = remove(it+1, end, *it);
+  v.erase(end, v.end());
 }
 
 //HASH CLASS
@@ -102,17 +107,17 @@ void Application::setInfo(string file, Hash& ignore){
   if(!infile) cout << file << " does not exist." << endl;
   else{
     infile >> word;
-    cleanIt(word);
+    clean(word);
     while(ignore.exists(word)){
       infile >> word; //bypass any words before name
-      cleanIt(word);
+      clean(word);
     }
     if(!ignore.exists(word)){
       word[0] = toupper(word[0]);
       first = word; //get first name
     }
     infile >> word;
-    cleanIt(word);
+    clean(word);
     word[0] = toupper(word[0]);
     last = word; //get last name
     while(infile){
@@ -131,6 +136,7 @@ void Application::setInfo(string file, Hash& ignore){
         infile >> nextWord;
         if(digitsIn(nextWord) == 7){ //get phone number (if number format has a space)
           num = word+nextWord;
+          clean(num);
           gotPhone = true;
         }
       }
@@ -165,7 +171,7 @@ void PriorityQueue::peek(){
   cout << "*************************************" << endl;
   cout << "Name: " << queue[0].first << ", " << queue[0].last << endl;
   cout << "Email: " << queue[0].email << endl;
-  cout << "Phone: " << queue[0].phone << endl;
+  cout << "Phone: (" << queue[0].phone[0] << queue[0].phone[1] << queue[0].phone[2] << ")" << queue[0].phone[3] << queue[0].phone[4] << queue[0].phone[5] << "-" << queue[0].phone[6] << queue[0].phone[7] << queue[0].phone[8] << queue[0].phone[9] << endl;
   cout << "Number of matching words: " << queue[0].keywords.size() << endl;
   cout << "Words: ";
   for(auto k : queue[0].keywords) cout << k << " ";

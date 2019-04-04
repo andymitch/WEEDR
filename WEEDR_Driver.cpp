@@ -6,21 +6,6 @@
 using namespace std;
 
 
-bool nonEssential(char c){
-  return(c==','||c=='.'||c==';'||c==':'||c=='\''||c=='\"'||c=='!'||c=='('||c==')');
-}
-void clean(string& word){
-  for(int i = 0; i < word.length(); i++){
-    if(nonEssential(word[i])) word.erase(word.begin()+i);
-    if(isalpha(word[i])) word[i] = tolower(word[i]);
-  }
-}
-void clean(vector<string>& v){
-  auto end = v.end();
-  for (auto it = v.begin(); it != end; ++it) end = remove(it+1, end, *it);
-  v.erase(end, v.end());
-}
-
 void get(Hash& ignore){
   ifstream infile;
   string word;
