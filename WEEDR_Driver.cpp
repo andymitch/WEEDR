@@ -84,13 +84,18 @@ int main(int argc, char** argv){
     applicant.position = i-1;
     applicants.enqueue(applicant); //queue up applicants
   }
-  cout << "Type anything to see the next Applicant." << endl;
-  string enter;
-  cin >> enter;
+
+  cout << "PRESS ENTER TO CONTINUE\n\n";
+  /*
   while(!applicants.isEmpty()){
+    cin.ignore();
     applicants.peek();
-    cin >> enter;
     applicants.dequeue();
   }
+  */
+
+  cin.ignore();
+  applicants.peekAll();
+
   return 0;
 }

@@ -52,6 +52,7 @@ public:
   ~PriorityQueue();
   void enqueue(Application);
   void dequeue();
+  void peekAll();
   void peek();
   bool isEmpty();
 };
