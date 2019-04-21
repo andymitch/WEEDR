@@ -12,7 +12,7 @@ bool has(string, char);
 vector<string> splitString(const string&, char);
 bool nonEssential(char);
 void clean(string&);
-void clean(vector<string>&);
+void clean(vector<vector<string>>&);
 
 struct LL{
   string word;
@@ -34,25 +34,24 @@ public:
 struct Application{
   string first, last, email;
   char phone [10];
-  int position; //when they applied
-  vector<string> keywords;
+  int place; //when they applied
+  vector<vector<string>> keywords;
   void setInfo(string, Hash&);
-  void setKeywords(string, Hash&, Hash&);
+  void setKeywords(string, Hash&, vector<Hash>&);
 };
 
 class PriorityQueue{
   Application* queue;
   int currentSize, maxSize;
-  void repairUp(int);
-  void repairDown(int);
-  bool priority(Application, Application);
+  void repairUp(int, int);
+  void repairDown(int, int);
+  bool priority(Application, Application, int);
   void swap(Application*, Application*);
 public:
   PriorityQueue(int);
   ~PriorityQueue();
-  void enqueue(Application);
-  void dequeue();
-  void peekAll();
-  void peek();
+  void enqueue(Application, int);
+  void dequeue(int);
+  void peekAll(vector<string>, vector<Application>&);
   bool isEmpty();
 };

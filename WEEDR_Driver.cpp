@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <cctype>
+#include <map>
 using namespace std;
 
 
@@ -17,7 +18,8 @@ void get(Hash& ignore){
     ignore.add(word);
   }
 }
-void get(string file, Hash& keywords, Hash& ignore){
+Hash get(string file, Hash& ignore){
+  Hash keywords(20);
   ifstream infile;
   string word;
   infile.open("positions/"+file);
@@ -43,26 +45,64 @@ void get(string file, Hash& keywords, Hash& ignore){
       }
     }
   }
+  return keywords;
 }
 
-vector<string> setKeywords(string file, Hash& ignore, Hash& key){
+vector<vector<string>> setKeywords(string file, vector<Hash>& pos){
   ifstream infile;
-  string word;
-  vector<string> keywords;
+  string word, w;
+
+  cout << "TEST KA" << endl;
+
+  vector<vector<string>> keywords(pos.size());
   infile.open("applicants/"+file);
   if(!infile) cout << file << "does not exist." << endl;
   else{
     while(infile){
       infile >> word;
+
+      cout << word << endl;
+
+      cout << "TEST KB" << endl;
+
       clean(word);
-      if(has(word, '/')){
-        vector<string> words = splitString(word, '/');
-        for(auto a : words) if(!ignore.exists(a) && key.exists(a)) keywords.push_back(a);
+
+      cout << "TEST KC" << endl;
+
+      for(int i = 0; i < pos.size(); i++){
+
+        cout << "TEST KD" << endl;
+
+        if(has(word, '/')){
+
+          cout << "TEST KE" << endl;
+
+          vector<string> words = splitString(word, '/');
+          for(auto a : words) if(pos[i].exists(a)) keywords[i].push_back(a);
+
+          cout << "TEST KF" << endl;
+
+        }
+        else if(has(word, '-')){
+
+          cout << "TEST KG" << endl;
+
+          vector<string> words = splitString(word, '-');
+
+          cout << "TEST KH" << endl;
+
+          for(auto a : words) if(pos[i].exists(a)) keywords[i].push_back(a);
+
+          cout << "TEST KI" << endl;
+
+        }else if(pos[i].exists(word)){
+          keywords[i].push_back(word);
+          cout << "TEST KJ" << endl;
+        }else{
+          w = word;
+          cout << "Doesn't exist." << endl;
+        }
       }
-      else if(has(word, '-')){
-        vector<string> words = splitString(word, '-');
-        for(auto a : words) if(!ignore.exists(a) && key.exists(a)) keywords.push_back(a);
-      }else if(!ignore.exists(word) && key.exists(word)) keywords.push_back(word);
     }
   }
   infile.close();
@@ -70,32 +110,144 @@ vector<string> setKeywords(string file, Hash& ignore, Hash& key){
   return keywords;
 }
 
-int main(int argc, char** argv){
-  cout << "\n\n";
-  PriorityQueue applicants(argc-2); //Heap of applicants
-  Hash ignore(100); //hash table of ignore words
+vector<string> uniquify(vector<string> words){
+  cout << "Words size: " << words.size() << endl;
+  for(int i = 0; i < words.size()-1; i++){
+    cout << "###" << endl;
+    for(int j = i+1; j < words.size(); j++){
+      cout << words[i] << endl;
+      if(words[i] == words[j]){
+        words.erase(words.begin()+j);
+        cout << "#" << words[i] << endl;
+        j--;
+      }
+    }
+  }
+  return words;
+}
+
+void title(vector<string>& positions, vector<string>& applicants){
+  string c = "x"; //initialize stopper
+  vector<string> _applicants, _positions;
+
+  cout << "***************************************************************" << endl;
+  cout << "WELCOME TO WEEDR! A resume parcing service." << endl;
+
+  cout << "***************************************************************" << endl;
+  cout << "What positions would you like to begin hiring for? ('s' to stop)" << endl;
+  for(int i = 0; i < positions.size()-1; i++) cout << i+1 << ". " << positions[i] << endl;
+  while(true){
+    cin >> c;
+    if(isdigit(c[0])){
+      if(stoi(c) > 1 && stoi(c) < positions.size()){
+        _positions.push_back(positions[stoi(c)-1]);
+        cout << "\nGot it...\n";
+      }
+    }else if(c == "s") break;
+  }
+  //cout << "***" << endl;
+  //for (auto a : _positions) cout << a << endl;
+  positions = _positions;//uniquify(_positions);
+  //cout << "***" << endl;
+  //for (auto a : positions) cout << a << endl;
+  //cout << "***" << endl;
+
+  c = "x"; //reset stopper
+
+  cout << "\n***************************************************************" << endl;
+  cout << "Who would you like to apply to the positions? ('s' to stop)" << endl;
+  for(int i = 0; i < applicants.size()-1; i++) cout << i+1 << ". " << applicants[i] << endl;
+  while(true){
+    cin >> c;
+    if(isdigit(c[0])){
+      if(stoi(c) > 1 && stoi(c) < applicants.size()-1){
+        _applicants.push_back(applicants[stoi(c)]);
+        cout << "\nGot 'em...\n";
+      }
+    }else if(c == "s") break;
+  }
+  //cout << "***" << endl;
+  //for (auto a : _applicants) cout << a << endl;
+  applicants = _applicants;//uniquify(_applicants);
+  //cout << "***" << endl;
+  //for (auto a : applicants) cout << a << endl;
+  //cout << "***" << endl;
+  cout << endl;
+}
+
+vector<string> initiate(vector<string>& pos, vector<string>& app){
+  ifstream inapp, inpos;
+  inapp.open("applicants/list.txt");
+  inpos.open("positions/list.txt");
+
+  //get list
+  string applicant, position;
+  while(inapp){
+    getline(inapp, applicant);
+    app.push_back(applicant);
+  }
+  while(inpos){
+    getline(inpos, position);
+    pos.push_back(position);
+  }
+
+  //customize list
+  vector<string> op = pos;
+  title(pos, app);
+
+  //format list
+  for(auto& p : pos){
+    for(int i = 0; i < p.length(); i++) if(p[i] == ' ') p.erase(p.begin()+i);
+    p.append(".txt");
+  }
+  for(auto& p : app){
+    for(int i = 0; i < p.length(); i++) if(p[i] == ' ') p.erase(p.begin()+i);
+    p.append(".txt");
+  }
+  return op;
+}
+
+int main(){
+
+  //get user input
+  vector<string> pos, app;
+  vector<string> peekPos = initiate(pos, app);
+
+  //get ignore words
+  Hash ignore(100);
   get(ignore);
-  Hash listing(50);
-  get(argv[1], listing, ignore);
-  for(int i = 2; i < argc; i++){
+
+  cout << "TEST" << endl;
+
+  //get positions
+  vector<Hash> positions;
+  for(auto& p : pos) positions.push_back(get(p, ignore));
+
+  cout << "TEST" << endl;
+
+  //get applicants' info
+  PriorityQueue applicants(app.size());
+  for(int i = 0; i < app.size(); i++){
     Application applicant;
-    applicant.setInfo(argv[i], ignore);
-    applicant.keywords = setKeywords(argv[i], ignore, listing);
-    applicant.position = i-1;
-    applicants.enqueue(applicant); //queue up applicants
+    cout << "test A" << endl;
+    applicant.setInfo(app[i], ignore);
+    cout << "test B" << endl;
+    applicant.keywords = setKeywords(app[i], positions);
+    cout << "test C" << endl;
+    applicant.place = i+1;
+    cout << "test D" << endl;
+    applicants.enqueue(applicant, 0);
+
+    cout << "test E" << endl;
   }
 
-  cout << "PRESS ENTER TO CONTINUE\n\n";
-  /*
-  while(!applicants.isEmpty()){
-    cin.ignore();
-    applicants.peek();
-    applicants.dequeue();
+  //show all
+  vector<Application> apps;
+  for(int i = 1; i < pos.size(); i++){
+    applicants.peekAll(peekPos, apps);
+    if(i < pos.size()-1) for(auto a : apps) applicants.enqueue(a, i);
+    cout << "TEST" << endl;
   }
-  */
-
-  cin.ignore();
-  applicants.peekAll();
 
   return 0;
 }

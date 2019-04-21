@@ -36,10 +36,12 @@ void clean(string& word){
     if(isalpha(word[i])) word[i] = tolower(word[i]);
   }
 }
-void clean(vector<string>& v){
-  auto end = v.end();
-  for (auto it = v.begin(); it != end; ++it) end = remove(it+1, end, *it);
-  v.erase(end, v.end());
+void clean(vector<vector<string>>& vec){
+  for(auto& v : vec){
+    auto end = v.end();
+    for(auto it = v.begin(); it != end; ++it) end = remove(it+1, end, *it);
+    v.erase(end, v.end());
+  }
 }
 
 //HASH CLASS
@@ -158,58 +160,50 @@ PriorityQueue::PriorityQueue(int size){
 PriorityQueue::~PriorityQueue(){
   delete[] queue;
 }
-void PriorityQueue::enqueue(Application applicant){
+void PriorityQueue::enqueue(Application applicant, int pos){
   queue[currentSize] = applicant;
-  repairUp(currentSize);
+  repairUp(currentSize, pos);
   currentSize++;
 }
-void PriorityQueue::dequeue(){
+void PriorityQueue::dequeue(int pos){
   queue[0] = queue[currentSize-1];
   currentSize--;
-  repairDown(0);
+  repairDown(0, pos);
 }
-void PriorityQueue::peekAll(){
-  cout << "***************************************************************************" << endl;
-  cout << left << setw(21) <<"Name:" << left << setw(23) << "Email:" << left << setw(15) << "Phone:" << left << setw(10) << "Keywords:" << "Place:" << endl;
-  cout << "***************************************************************************" << endl;
-  while(!isEmpty()){
-    cout << left << setw(8) << queue[0].first << " " << left << setw(12) << queue[0].last;
-    cout << left << setw(22) << queue[0].email;
-    cout << right << " (" << queue[0].phone[0] << queue[0].phone[1] << queue[0].phone[2] << ")" << queue[0].phone[3] << queue[0].phone[4] << queue[0].phone[5] << "-" << queue[0].phone[6] << queue[0].phone[7] << queue[0].phone[8] << queue[0].phone[9] << " ";
-    cout << right << setw(10) << queue[0].keywords.size();
-    cout << right << setw(7) << queue[0].position << endl;
-    dequeue();
+void PriorityQueue::peekAll(vector<string> pos, vector<Application>& app){
+  for(int i = 0; i < pos.size(); i++){
+    cout << pos[i] << endl;
+    cout << "***************************************************************************" << endl;
+    cout << left << setw(21) <<"Name:" << left << setw(23) << "Email:" << left << setw(15) << "Phone:" << left << setw(10) << "Keywords:" << "Place:" << endl;
+    cout << "***************************************************************************" << endl;
+    while(!isEmpty()){
+      cout << left << setw(8) << queue[0].first << " " << left << setw(12) << queue[0].last;
+      cout << left << setw(22) << queue[0].email;
+      cout << right << " (" << queue[0].phone[0] << queue[0].phone[1] << queue[0].phone[2] << ")" << queue[0].phone[3] << queue[0].phone[4] << queue[0].phone[5] << "-" << queue[0].phone[6] << queue[0].phone[7] << queue[0].phone[8] << queue[0].phone[9] << " ";
+      cout << right << setw(10) << queue[0].keywords[i].size();
+      cout << right << setw(7) << queue[0].place << endl;
+      app.push_back(queue[0]);
+      dequeue(i);
+    }
+    cout << "***************************************************************************\n\n" << endl;
   }
-  cout << "***************************************************************************" << endl;
-  cout << endl;
 }
-void PriorityQueue::peek(){
-  cout << "*************************************" << endl;
-  cout << "Name:  " << queue[0].first << " " << queue[0].last << endl;
-  cout << "Email: " << queue[0].email << endl;
-  cout << "Phone: (" << queue[0].phone[0] << queue[0].phone[1] << queue[0].phone[2] << ")" << queue[0].phone[3] << queue[0].phone[4] << queue[0].phone[5] << "-" << queue[0].phone[6] << queue[0].phone[7] << queue[0].phone[8] << queue[0].phone[9] << endl;
-  cout << "Words: " << queue[0].keywords.size() << endl;
-  //cout << "Words: ";
-  //for(auto k : queue[0].keywords) cout << k << " ";
-  //cout << endl;
-  cout << "Place: " << queue[0].position << "\n\n";
+void PriorityQueue::repairUp(int index, int pos){
+  for(int i = index; i > 0; i--) if(priority(queue[i], queue[i/2], pos)) swap(&queue[i], &queue[i-1]);
 }
-void PriorityQueue::repairUp(int index){
-  for(int i = index; i > 0; i--) if(priority(queue[i], queue[i/2])) swap(&queue[i], &queue[i-1]);
-}
-void PriorityQueue::repairDown(int index){
+void PriorityQueue::repairDown(int index, int pos){
   int left = (index*2)+1, right = (index*2)+2, smallest = index;
-  if(left < currentSize) if(priority(queue[left], queue[smallest])) smallest = left;
-  if(right < currentSize) if(priority(queue[right], queue[smallest])) smallest = right;
+  if(left < currentSize) if(priority(queue[left], queue[smallest], pos)) smallest = left;
+  if(right < currentSize) if(priority(queue[right], queue[smallest], pos)) smallest = right;
   if(smallest != index){
     swap(&queue[smallest], &queue[index]);
-    repairDown(smallest);
+    repairDown(smallest, pos);
   }
 }
-bool PriorityQueue::priority(Application a, Application b){
-  if(a.keywords.size() > b.keywords.size()) return true;
-  if(a.keywords.size() < b.keywords.size()) return false;
-  if(a.position < b.position) return true;
+bool PriorityQueue::priority(Application a, Application b, int pos){
+  if(a.keywords[pos].size() > b.keywords[pos].size()) return true;
+  if(a.keywords[pos].size() < b.keywords[pos].size()) return false;
+  if(a.place < b.place) return true;
   return false;
 }
 void PriorityQueue::swap(Application* a, Application* b){
