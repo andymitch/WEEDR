@@ -7,13 +7,13 @@ CSCI 2270-302
 
 ## Overview
 
-WEEDR is a simple resume parser designed to match the most qualified candidates for a specific job opportunity based on matching keywords. WEEDR is written in C++ and is command line dependent. The program is able to take one job listing in .txt format and compare it to any number of resumes that are also in .txt format. It will the set up a priority queue of the applicants based on number of keywords matched from the job listing and position in run arguments.
+WEEDR is a simple resume parser designed to match the most qualified candidates for specific job opportunities based on matching keywords. WEEDR is written in C++ and is command line dependent. The program is able to take multiple job listing in .txt format and compare it to any number of resumes that are also in .txt format. It will the set up a priority queue of the applicants based on number of keywords matched from the job listing and place (time of apllication).
   
 ## Data Structures
 
   * Priority Queue/Max Heap - ranks potential candidates by keywords and time of submission.
   * Hash Table - allows for a quick reference to keywords as well as words to ignore.
-  * Class - retains each candidate’s identifying and contact information as well as their matched keywords.
+  * Struct - retains each candidate’s identifying and contact information as well as their matched keywords.
   * STD::Vector - dynamically stores a candidate’s matched keywords.
 
 ## How to Use
@@ -26,19 +26,19 @@ WEEDR is a simple resume parser designed to match the most qualified candidates 
   
    * From browser: [WEEDR](https://github.com/andymitch/WEEDR/archive/master.zip).
   
-3. Insert any job listings into the positions folder.
+3. Insert any job listings into the positions folder, referencing them in the positions/list.txt file.
   
-4. Insert any resumes into the applicants folder.
+4. Insert any resumes into the applicants folder, referencing them in the applicants/list.txt file.
   
 5. Compile: `g++ -std=c++11 WEEDR.cpp WEEDR_Driver.cpp -o weedr`.
   
-6. Run: `./weedr [job listing] [resume] [resume…]`.
+6. Run: `./weedr`.
 
 ## Future Development
 
-  * Develop a UI (user interface) by either utilizing a GUI library (i.e. Qt, wxWidgets, etc.) or by rewriting program in the Javascript language to utilize HTML/CSS capabilities.
+  * Develop a UI (user interface) by either utilizing a GUI library (i.e. Qt, wxWidgets, etc.) or by utilizing node.js add-on capabilities to give it a web-based front end with HTML/CSS.
   * Allow for other file formats to be read than just .txt files.
   * Continue to improving information parcing accuracy.
 
 ## Open Issues/Bugs
-
+currently looking for any open edges
