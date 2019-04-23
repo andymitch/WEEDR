@@ -6,43 +6,52 @@
 #include <algorithm>
 #include <array>
 #include <iomanip>
+#include <string>
 using namespace std;
 
-
-//HELPER FUNCTIONS
+//HELPER FUNCTION
 /*****************************************************************************/
+string format(string word){
+  for(int i = 0; i < word.length(); i++) if(word[i] == ' ') word.erase(word.begin()+i);
+  word.append(".txt");
+  return word;
+}
+
+bool nonEss(char c){
+  return(c==','||c=='.'||c==';'||c==':'||c=='\''||c=='\"'||c=='!'||c=='?'||c=='('||c==')'||c=='-');
+}
+
+string clean(string word){
+  for(int i = 0; i < word.length(); i++){
+    if(nonEss(word[i])) word.erase(word.begin()+i);
+    if(isalpha(word[i])) word[i] = tolower(word[i]);
+  }
+  return word;
+}
+
+bool has(string word, char c){
+  for(int i = 0; i < word.length(); i++) if(word[i] == c) return true;
+  return false;
+}
+
 int digitsIn(string word){
   int count = 0;
   for(int i = 0; i < word.length(); i++) if(isdigit(word[i])) count++;
   return count;
 }
-bool has(string word, char c){
-  for(int i = 0; i < word.length(); i++) if(word[i] == c) return true;
-  return false;
-}
-vector<string> splitString(const string& str, char c){
-  vector<string> words;
+
+vector<string> split(string str, char a, char b){
+  vector<string> wordsA, wordsB;
   string word;
-  istringstream ss(str);
-  while (getline(ss, word, c)) words.push_back(word);
-  return words;
-}
-bool nonEss(char c){
-  return(c==','||c=='.'||c==';'||c==':'||c=='\''||c=='\"'||c=='!'||c=='('||c==')'||c=='-');
-}
-void clean(string& word){
-  for(int i = 0; i < word.length(); i++){
-    if(nonEss(word[i])) word.erase(word.begin()+i);
-    if(isalpha(word[i])) word[i] = tolower(word[i]);
+  istringstream sa(str);
+  while (getline(sa, word, a)) wordsA.push_back(word);
+  for(auto w : wordsA){
+    istringstream sb(w);
+    while(getline(sb, word, b)) wordsB.push_back(word);
   }
+  return wordsB;
 }
-void clean(vector<vector<string>>& vec){
-  for(auto& v : vec){
-    auto end = v.end();
-    for(auto it = v.begin(); it != end; ++it) end = remove(it+1, end, *it);
-    v.erase(end, v.end());
-  }
-}
+
 
 //HASH CLASS
 /*****************************************************************************/
@@ -50,6 +59,7 @@ Hash::Hash(int sz){
   size = sz;
   table = new LL*[size];
 }
+
 Hash::~Hash(){
   for(int i = 0; i < size; i++){
     LL* next;
@@ -63,6 +73,7 @@ Hash::~Hash(){
   }
   delete [] table;
 }
+
 unsigned int Hash::getHash(string word){
   unsigned int hash = 5381;
   for(int i = 0; i < word.length(); i++) hash = (hash*33)+word[i];
@@ -70,8 +81,9 @@ unsigned int Hash::getHash(string word){
   if(hash < 0) hash += size;
   return hash;
 }
+
 void Hash::add(string word){
-  if(!exists(word)){
+  if(!exist(word)){
     int index = getHash(word);
     LL* prev = nullptr;
     LL* current = table[index];
@@ -86,6 +98,7 @@ void Hash::add(string word){
     else table[index] = current;
   }
 }
+
 LL* Hash::search(string word){
   int index = getHash(word);
   LL* current = table[index];
@@ -95,59 +108,109 @@ LL* Hash::search(string word){
   }
   return current;
 }
-bool Hash::exists(string word){
-  LL* exists = search(word);
-  return(exists != nullptr);
+
+bool Hash::exist(string word){
+  LL* exist = search(word);
+  return(exist != nullptr);
+}
+
+void Hash::get(){
+  string word;
+  ifstream infile;
+  infile.open("ignoreWords.txt");
+  while(infile){
+    infile >> word;
+    clean(word);
+    this->add(word);
+  }
+}
+
+void Hash::get(string file, Hash* ignore){
+  string word;
+  ifstream infile;
+  infile.open("positions/"+file);
+  while(infile){
+    infile >> word;
+    word = clean(word);
+    if(!ignore->exist(word)) this->add(word);
+  }
+  infile.close();
 }
 
 //APPLICATION STRUCT
 /*****************************************************************************/
-void Application::setInfo(string file, Hash& ignore){
-  ifstream infile;
-  infile.open("applicants/"+file); //resume should be in folder 'applicants'
+void Application::push(string word, vector<Hash*>& pos){
+  for(int i = 0; i < pos.size(); i++) if(pos[i]->exist(word)) keywords[i].push_back(word);
+}
+
+void Application::get(int p, string file, Hash* ignore, vector<Hash*>& pos){
+  place = p;
   string word;
+  ifstream infile;
+  infile.open("applicants/"+file);
   bool gotEmail = false, gotPhone = false;
-  if(!infile) cout << file << " does not exist." << endl;
-  else{
+
+  //skip to name
+  infile >> word;
+  word = clean(word);
+  while(ignore->exist(word)){
     infile >> word;
-    clean(word);
-    while(ignore.exists(word)){
-      infile >> word; //bypass any words before name
-      clean(word);
-    }
-    if(!ignore.exists(word)){
-      word[0] = toupper(word[0]);
-      first = word; //get first name
-    }
+    word = clean(word);
+  }
+
+  //get name
+  word[0] = toupper(word[0]);
+  first = word; //get first name
+  infile >> word;
+  word = clean(word);
+  word[0] = toupper(word[0]);
+  last = word; //get last name
+
+  //get email and phone number
+  while(!gotEmail || !gotPhone){
     infile >> word;
-    clean(word);
-    word[0] = toupper(word[0]);
-    last = word; //get last name
-    while(infile){
-      infile >> word;
-      string num;
-      if(has(word, '@')){ //get email address
-        email = word;
-        gotEmail = true;
-      }
-      else if(digitsIn(word) == 10){ //get phone number
-        num = word;
+    string num;
+    if(has(word, '@')){ //get email address
+      email = word;
+      gotEmail = true;
+    }
+    else if(digitsIn(word) == 10){ //get phone number
+      num = word;
+      gotPhone = true;
+    }
+    else if(digitsIn(word) == 3){
+      string nextWord;
+      infile >> nextWord;
+      if(digitsIn(nextWord) == 7){ //get phone number (if number format has a space)
+        num = word+nextWord;
+        num = clean(num);
         gotPhone = true;
       }
-      else if(digitsIn(word) == 3){
-        string nextWord;
-        infile >> nextWord;
-        if(digitsIn(nextWord) == 7){ //get phone number (if number format has a space)
-          num = word+nextWord;
-          clean(num);
-          gotPhone = true;
-        }
-      }
-      if(num.length() == 10) for(int i = 0; i < 10; i++) phone[i] = num[i];
-      if(gotEmail && gotPhone) break; //stop when email and phone are found
     }
+    if(num.length() == 10) for(int i = 0; i < 10; i++) phone[i] = num[i];
+  }
+
+  //set size of keywords to match the number of positions to index easier
+  keywords.resize(pos.size());
+
+  //get keywords
+  while(infile){
+    infile >> word;
+    word = clean(word);
+    if(has(word, '/')||has(word, '-')){
+      vector<string> words = split(word, '/', '-');
+      for(auto w : words) push(word, pos);
+    }else push(word, pos);
   }
   infile.close();
+}
+
+void Application::peek(int i){
+  cout << left << setw(8) << first << " " << left << setw(12) << last;
+  cout << left << setw(22) << email;
+  cout << right << " (" << phone[0] << phone[1] << phone[2] << ")" << phone[3] << phone[4] << phone[5] << "-" << phone[6] << phone[7] << phone[8] << phone[9] << " ";
+  cout << right << setw(10) << keywords[i].size();
+  cout << right << setw(7) << place << endl;
 }
 
 //PRIORITY QUEUE HEAP CLASS
@@ -157,40 +220,31 @@ PriorityQueue::PriorityQueue(int size){
   maxSize = size;
   queue = new Application[maxSize];
 }
+
 PriorityQueue::~PriorityQueue(){
   delete[] queue;
 }
+
 void PriorityQueue::enqueue(Application applicant, int pos){
   queue[currentSize] = applicant;
   repairUp(currentSize, pos);
   currentSize++;
 }
+
 void PriorityQueue::dequeue(int pos){
   queue[0] = queue[currentSize-1];
   currentSize--;
   repairDown(0, pos);
 }
-void PriorityQueue::peekAll(vector<string> pos, vector<Application>& app){
-  for(int i = 0; i < pos.size(); i++){
-    cout << pos[i] << endl;
-    cout << "***************************************************************************" << endl;
-    cout << left << setw(21) <<"Name:" << left << setw(23) << "Email:" << left << setw(15) << "Phone:" << left << setw(10) << "Keywords:" << "Place:" << endl;
-    cout << "***************************************************************************" << endl;
-    while(!isEmpty()){
-      cout << left << setw(8) << queue[0].first << " " << left << setw(12) << queue[0].last;
-      cout << left << setw(22) << queue[0].email;
-      cout << right << " (" << queue[0].phone[0] << queue[0].phone[1] << queue[0].phone[2] << ")" << queue[0].phone[3] << queue[0].phone[4] << queue[0].phone[5] << "-" << queue[0].phone[6] << queue[0].phone[7] << queue[0].phone[8] << queue[0].phone[9] << " ";
-      cout << right << setw(10) << queue[0].keywords[i].size();
-      cout << right << setw(7) << queue[0].place << endl;
-      app.push_back(queue[0]);
-      dequeue(i);
+
+void PriorityQueue::repairUp(int index, int pos){
+  for(int i = index; i > 0; i--){
+    if(priority(queue[i], queue[i/2], pos)){
+      swap(&queue[i], &queue[i-1]);
     }
-    cout << "***************************************************************************\n\n" << endl;
   }
 }
-void PriorityQueue::repairUp(int index, int pos){
-  for(int i = index; i > 0; i--) if(priority(queue[i], queue[i/2], pos)) swap(&queue[i], &queue[i-1]);
-}
+
 void PriorityQueue::repairDown(int index, int pos){
   int left = (index*2)+1, right = (index*2)+2, smallest = index;
   if(left < currentSize) if(priority(queue[left], queue[smallest], pos)) smallest = left;
@@ -200,17 +254,28 @@ void PriorityQueue::repairDown(int index, int pos){
     repairDown(smallest, pos);
   }
 }
+
 bool PriorityQueue::priority(Application a, Application b, int pos){
   if(a.keywords[pos].size() > b.keywords[pos].size()) return true;
   if(a.keywords[pos].size() < b.keywords[pos].size()) return false;
   if(a.place < b.place) return true;
   return false;
 }
+
 void PriorityQueue::swap(Application* a, Application* b){
   Application temp = *a;
   *a = *b;
   *b = temp;
 }
+
+void PriorityQueue::peek(int i){
+  queue[0].peek(i);
+}
+
+Application PriorityQueue::top(){
+  return queue[0];
+}
+
 bool PriorityQueue::isEmpty(){
   return(currentSize == 0);
 }
