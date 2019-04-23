@@ -41,10 +41,10 @@ int main(){
     cin >> p;
     if(p == "s") break;
     else if(isdigit(p[0])){
-      if(stoi(p) > 0 && stoi(p) <= _pos.size()){
+      if(stoi(p) > 0 && stoi(p) < _pos.size()){
         pos.push_back(format(_pos[stoi(p)-1]));
         cout << "\t" << _pos[stoi(p)-1] << endl;;
-      }
+      }else cout << "Invalid entry." << endl;
     }
     else {cout << "Invalid entry." << endl;}
   }
@@ -57,10 +57,10 @@ int main(){
     cin >> a;
     if(a == "s") break;
     else if(isdigit(a[0])){
-      if(stoi(a) > 0 && stoi(a) <= _app.size()){
+      if(stoi(a) > 0 && stoi(a) < _app.size()){
         app.push_back(format(_app[stoi(a)-1]));
         cout << "\t" << _app[stoi(a)-1] << endl;
-      }
+      }else cout << "Invalid entry." << endl;
     }
     else {cout << "Invalid entry." << endl;}
   }
