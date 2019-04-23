@@ -2,7 +2,7 @@
 Andrew Mitchell
 CSCI 2270-302
 
-# WEEDR![alt text](https://github.com/andymitch/WEEDR/blob/master/leaf.png "WEEDR logo")
+# WEEDR![leaf logo](https://github.com/andymitch/WEEDR/blob/master/leaf.png "WEEDR logo")
 ### Resume Parser
 
 ## Overview
