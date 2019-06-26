@@ -104,6 +104,15 @@ int main(){
     cout << "***************************************************************************\n\n";
   }
 
+
+  cout << "Would you like to view the list of keywords? (y/n): ";
+  while(true){
+    cin >> a;
+    if(a == "y"){temp->peekKeys(); break;}
+    else if(a == "n") break;
+    else cout << "\nInvalid entry. Try 'y' or 'n': ";
+  }
+
   //free memory
   delete temp;
   delete applicants;

@@ -272,6 +272,15 @@ void PriorityQueue::peek(int i){
   queue[0].peek(i);
 }
 
+void PriorityQueue::peekKeys(){
+  while(!isEmpty()){
+    cout << endl << queue[0].first << " " << queue[0].last << ": \n";
+    for(auto ks : queue[0].keywords){cout << "\n\n"; for(auto k : ks) cout << k << " ";}
+    cout << endl;
+    dequeue(0);
+  }
+}
+
 Application PriorityQueue::top(){
   return queue[0];
 }
