@@ -21,12 +21,11 @@ bool nonEss(char c){
   return(c==','||c=='.'||c==';'||c==':'||c=='\''||c=='\"'||c=='!'||c=='?'||c=='('||c==')'||c=='-');
 }
 
-string clean(string word){
+void clean(string& word){
   for(int i = 0; i < word.length(); i++){
     if(nonEss(word[i])) word.erase(word.begin()+i);
     if(isalpha(word[i])) word[i] = tolower(word[i]);
   }
-  return word;
 }
 
 bool has(string word, char c){
@@ -52,6 +51,27 @@ vector<string> split(string str, char a, char b){
   return wordsB;
 }
 
+//EDUCATION STRUCT
+/*****************************************************************************/
+bool Education::isEd(string word){
+  if(word == "AS") return true;
+  clean(word);
+  if(word == "aa"||word == "associates"||word == "associate") return true;
+  if(word == "ba"||word == "bs"||word == "bachelors"||word == "bachelor") return true;
+  if(word == "ma"||word == "ms"||word == "masters"||word == "master") return true;
+  if(word == "phd"||word == "doctorates"||word == "doctorate") return true;
+  return false;
+}
+
+bool Education::setLevel(string word){
+  char first = word[0];
+  if(first == 'a') level = A;
+  else if(first == 'b') level = B;
+  else if(first == 'm') level = M;
+  else if(first == 'p'||first == 'd') level = D;
+  if(word.length() > 2) return true;
+  else return false;
+}
 
 //HASH CLASS
 /*****************************************************************************/
@@ -131,7 +151,7 @@ void Hash::get(string file, Hash* ignore){
   infile.open("positions/"+file);
   while(infile){
     infile >> word;
-    word = clean(word);
+    clean(word);
     if(!ignore->exist(word)) this->add(word);
   }
   infile.close();
@@ -139,8 +159,18 @@ void Hash::get(string file, Hash* ignore){
 
 //APPLICATION STRUCT
 /*****************************************************************************/
-void Application::push(string word, vector<Hash*>& pos){
-  for(int i = 0; i < pos.size(); i++) if(pos[i]->exist(word)) keywords[i].push_back(word);
+bool Application::push(string word, vector<Hash*>& pos){
+  if(education.isEd(word)) return true;
+  else for(int i = 0; i < pos.size(); i++) if(pos[i]->exist(word)) keywords[i].push_back(word);
+  return false;
+}
+
+string Application::getEd(){
+  if(education.level == A) return "Associate's in " + education.major;
+  if(education.level == B) return "Bachelor's in " + education.major;
+  if(education.level == M) return "Master's in " + education.major;
+  if(education.level == D) return "Doctorate in " + education.major;
+  return "None";
 }
 
 void Application::get(int p, string file, Hash* ignore, vector<Hash*>& pos){
@@ -148,21 +178,21 @@ void Application::get(int p, string file, Hash* ignore, vector<Hash*>& pos){
   string word;
   ifstream infile;
   infile.open("applicants/"+file);
-  bool gotEmail = false, gotPhone = false;
+  bool gotEmail = false, gotPhone = false, gotEdu = false;
 
   //skip to name
   infile >> word;
-  word = clean(word);
+  clean(word);
   while(ignore->exist(word)){
     infile >> word;
-    word = clean(word);
+    clean(word);
   }
 
   //get name
   word[0] = toupper(word[0]);
   first = word; //get first name
   infile >> word;
-  word = clean(word);
+  clean(word);
   word[0] = toupper(word[0]);
   last = word; //get last name
 
@@ -183,7 +213,7 @@ void Application::get(int p, string file, Hash* ignore, vector<Hash*>& pos){
       infile >> nextWord;
       if(digitsIn(nextWord) == 7){ //get phone number (if number format has a space)
         num = word+nextWord;
-        num = clean(num);
+        clean(num);
         gotPhone = true;
       }
     }
@@ -192,15 +222,60 @@ void Application::get(int p, string file, Hash* ignore, vector<Hash*>& pos){
 
   //set size of keywords to match the number of positions to index easier
   keywords.resize(pos.size());
-
   //get keywords
+  bool is = false, len;
+  int edCount =  0;
   while(infile){
+    if(is && !gotEdu && edCount < 2){
+      edCount++;
+      if(len){
+        //Associate's
+        infile >> word;
+        if(word == "of"){
+          infile >> word;
+          infile >> word;
+          if(word == "in"){
+            infile >> word;
+            education.major = word;
+            infile >> word;
+            education.major = education.major + " " + word;
+            is = false; gotEdu = true;
+          }else if(word == "major" || word == "Major"){
+            infile >> word;
+            cout << word;
+            infile >> word;
+            cout << word;
+            education.major = word;
+            cout << education.major;
+            infile >> word;
+            cout << word;
+            education.major = education.major + " " + word;
+            cout << education.major;
+          }else{
+            education.major = word;
+            infile >> word;
+            education.major = education.major + " " + word;
+            is = false; gotEdu = true;
+          }
+        }
+      }else{
+        //AA
+        infile >> word;
+        if(word == "in"){
+          infile >> word;
+          education.major = word;
+          infile >> word;
+          education.major = education.major + " " + word;
+          is = false; //gotEdu = true;
+        }
+      }
+    }
     infile >> word;
-    word = clean(word);
+    clean(word);
     if(has(word, '/')||has(word, '-')){
       vector<string> words = split(word, '/', '-');
-      for(auto w : words) push(word, pos);
-    }else push(word, pos);
+      for(auto w : words) if(push(w, pos)) {is = true; len = education.setLevel(word);}
+    }else if(push(word, pos)) {is = true; len = education.setLevel(word);}
   }
   infile.close();
 }
@@ -210,7 +285,7 @@ void Application::peek(int i){
   cout << left << setw(22) << email;
   cout << right << " (" << phone[0] << phone[1] << phone[2] << ")" << phone[3] << phone[4] << phone[5] << "-" << phone[6] << phone[7] << phone[8] << phone[9] << " ";
   cout << right << setw(10) << keywords[i].size();
-  cout << right << setw(7) << place << endl;
+  cout << right << setw(7) << place << " " << getEd() << endl;
 }
 
 //PRIORITY QUEUE HEAP CLASS

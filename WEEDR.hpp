@@ -8,10 +8,19 @@ using namespace std;
 
 string format(string); //turns title or name into .txt file format
 bool nonEss(char); //if char is a certain type
-string clean(string); //formats strings for simplicity when comparing
+void clean(string&); //formats strings for simplicity when comparing
 bool has(string, char); //string has char in it
 int digitsIn(string); //returns how many digits are in string
 vector<string> split(string); //split strings into multiple strings based on char
+
+//education levels
+enum Ed{N,A,B,M,D}; //None, Associate's, Bachelor's, Master's, Doctorate/PhD
+struct Education{
+  Ed level;
+  string major;
+  bool isEd(string);
+  bool setLevel(string);
+};
 
 //linked list
 struct LL{
@@ -39,10 +48,13 @@ struct Application{
   string first, last, email; //name and email address
   char phone [10]; //phone number
   int place; //when they applied
+  Education education;
   vector<vector<string>> keywords; //words matched from each position
+  Application(){education.level = N;}
   void get(int, string, Hash*, vector<Hash*>&); //get all info and keywords
-  void push(string, vector<Hash*>&); //add word if keyword
+  bool push(string, vector<Hash*>&); //add word if keyword
   void peek(int i); //print all applicant info
+  string getEd();
 };
 
 //heap array (priority queue structure)
