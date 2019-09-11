@@ -24,7 +24,7 @@ WEEDR is a simple resume parser designed to match the most qualified candidates 
   
    * From terminal: `$ git clone https://github.com/andymitch/WEEDR.git`
   
-   * From browser: [WEEDR](https://github.com/andymitch/WEEDR/archive/master.zip).
+   * From link: [WEEDR](https://github.com/andymitch/WEEDR/archive/master.zip).
   
 3. Insert any job listings into the positions folder, referencing them in the positions/list.txt file.
   
