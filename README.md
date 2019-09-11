@@ -39,7 +39,7 @@ WEEDR is a simple resume parser designed to match the most qualified candidates 
   * Add software skills factor
   * Develop UI
   * Allow for other file formats to be read than just .txt files.
-  * Continue to improving information parcing accuracy.
+  * Continue improving information parcing accuracy.
 
 ## Open Issues/Bugs
   * duplicate keywords
