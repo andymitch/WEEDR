@@ -7,7 +7,7 @@ CSCI 2270-302
 
 ## Overview
 
-WEEDR is a simple resume parser designed to match the most qualified candidates for specific job opportunities based on matching keywords. WEEDR is written in C++ and is command line dependent. The program is able to take multiple job listing in .txt format and compare it to any number of resumes that are also in .txt format. It will the set up a priority queue of the applicants based on number of keywords matched from the job listing and place (time of apllication).
+WEEDR is a simple resume parser designed to match the most qualified candidates for specific job opportunities based on matching keywords. WEEDR is written in C++ and is command line dependent. The program is able to take multiple job listing in .txt format and compare it to any number of resumes that are also in .txt format. It will the set up a priority queue of the applicants based on number of keywords matched from the job listing and place (time of aplication).
   
 ## Data Structures
 
